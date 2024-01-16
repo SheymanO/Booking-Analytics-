@@ -109,3 +109,15 @@ WHERE
     Distribution_Channel = 'Corporate'
 GROUP BY
     DATEPART(MONTH, Arrival_Date);
+
+----Compariison of Online and Offline Travel Agents 
+Select 
+     Distribution_channel,
+     Sum(Revenue) as Revenue,
+     Sum(Revenue_Loss) as Revenue_Loss,
+     Count(*) as No_of_Bookings,
+     SUM(CASE WHEN Status = 'Cancelled' THEN 1 ELSE 0 END) AS CanceledBookings,
+     AVG(CASE WHEN Status = 'Cancelled' THEN 1.0 ELSE 0.0 END) AS CancellationRate
+ From SHG_Booking
+ where Distribution_Channel in ('Online Travel Agent' ,'Offline Travel Agent')
+ Group By Distribution_Channel
